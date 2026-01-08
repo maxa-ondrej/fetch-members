@@ -26,7 +26,7 @@ jobs:
           mode: app
       
       - name: Archive build artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v6
         with:
           name: executable
           path: build/app.exe
