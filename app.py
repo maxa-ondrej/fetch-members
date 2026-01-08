@@ -125,17 +125,14 @@ def save_members(username: str, password: str, manager: str):
         raise ValueError(f"Manager {manager} not found in LDAP")
     print(f"Manager: {user['name']} ({user['email']})")
     members = ldap.get_managed_users(manager)
-    if members is None:
-        return []
     data = "\n".join(
         [
-            f"{member}, {user['name']},{user['email']}"
+            f"{member},{user['name']},{user['email']}"
             for member, user in zip(
                 members,
                 [
-                    ldap.get_user(member)
+                    ldap.get_user(member) if not member.endswith("t") else None
                     for member in members
-                    if not member.endswith("t")
                 ],
             )
             if user is not None
